@@ -173,14 +173,14 @@ graph TB
 ```mermaid
 graph TD
     subgraph "RDMA Buffer (Shared via NVSHMEM)"
-        A[rdma_recv_num_tokens_mixed<br/>rdma_ranks × (nvl_ranks + experts + 1) × int] --> B[rdma_channel_data<br/>channels × rdma_ranks × tokens × bytes_per_token × uint8]
-        B --> C[rdma_channel_metadata<br/>channels × rdma_ranks × metadata × int]
+        A["rdma_recv_num_tokens_mixed<br/>rdma_ranks x (nvl_ranks + experts + 1) x int"] --> B["rdma_channel_data<br/>channels x rdma_ranks x tokens x bytes_per_token x uint8"]
+        B --> C["rdma_channel_metadata<br/>channels x rdma_ranks x metadata x int"]
     end
     
     subgraph "NVL Buffer (Per Node via IPC)"
-        D[nvl_reduced_num_tokens_per_expert<br/>experts × int] --> E[nvl_send_num_tokens_per_rank<br/>rdma_ranks × nvl_ranks × int]
-        E --> F[nvl_channel_data<br/>channels × nvl_ranks × tokens × hidden × int4]
-        F --> G[nvl_channel_metadata<br/>channels × nvl_ranks × metadata × int]
+        D["nvl_reduced_num_tokens_per_expert<br/>experts x int"] --> E["nvl_send_num_tokens_per_rank<br/>rdma_ranks x nvl_ranks x int"]
+        E --> F["nvl_channel_data<br/>channels x nvl_ranks x tokens x hidden x int4"]
+        F --> G["nvl_channel_metadata<br/>channels x nvl_ranks x metadata x int"]
     end
 ```
 
@@ -189,19 +189,19 @@ graph TD
 ```mermaid
 graph LR
     subgraph "SourceMeta (8 bytes)"
-        A[src_rdma_rank: int<br/>Source RDMA rank (node)]
-        B[is_token_in_nvl_rank_bits: int<br/>Bitmask for NVL ranks within source node]
+        A["src_rdma_rank: int<br/>Source RDMA rank (node)"]
+        B["is_token_in_nvl_rank_bits: int<br/>Bitmask for NVL ranks within source node"]
     end
     
     subgraph "Bitmask Example"
-        C[Bit 0: NVL Rank 0]
-        D[Bit 1: NVL Rank 1]
-        E[Bit 2: NVL Rank 2]
-        F[Bit 3: NVL Rank 3]
-        G[Bit 4: NVL Rank 4]
-        H[Bit 5: NVL Rank 5]
-        I[Bit 6: NVL Rank 6]
-        J[Bit 7: NVL Rank 7]
+        C["Bit 0: NVL Rank 0"]
+        D["Bit 1: NVL Rank 1"]
+        E["Bit 2: NVL Rank 2"]
+        F["Bit 3: NVL Rank 3"]
+        G["Bit 4: NVL Rank 4"]
+        H["Bit 5: NVL Rank 5"]
+        I["Bit 6: NVL Rank 6"]
+        J["Bit 7: NVL Rank 7"]
     end
     
     B --> C
